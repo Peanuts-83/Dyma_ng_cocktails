@@ -1,9 +1,13 @@
 <div class="d-flex flex-column">
-    <img class="mb-20" [src]="cocktail.img" [alt]="cocktail.name + '-illustration'">
+    <div [style]="'maxHeight: 350px'">
+        <img class="mb-20" [src]="cocktail.img" [alt]="cocktail.name + '-illustration'">
+    </div>
     <h3 class="mb-20">{{cocktail.name}}</h3>
     <ul class="mb-20" style="color:var(--secondary)"><em>
         <li *ngFor="let ingr of cocktail.ingredients">
-            {{ingr}}
+            {{ingr.quantity}} {{ingr.unit}}
+            {{ingr.unit ?  'de' : null}}
+            {{ingr.name}}
         </li>
     </em></ul>
     <p class="mb-20">{{cocktail.description}}</p>

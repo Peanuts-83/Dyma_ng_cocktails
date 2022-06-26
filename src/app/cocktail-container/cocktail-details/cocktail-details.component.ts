@@ -1,4 +1,4 @@
-import { Cocktail } from '../../interfaces/cocktail.interface'
+import { Cocktail } from '../../shared/interfaces/cocktail.interface'
 import { Component, Input, OnInit } from '@angular/core'
 
 @Component({
