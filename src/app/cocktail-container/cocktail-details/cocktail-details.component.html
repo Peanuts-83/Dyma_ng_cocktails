@@ -1,17 +1,23 @@
 <div class="d-flex flex-column">
-    <div [style]="'maxHeight: 350px'">
+    <div [style]="'maxHeight: 30%'">
         <img class="mb-20" [src]="cocktail.img" [alt]="cocktail.name + '-illustration'">
     </div>
     <h3 class="mb-20">{{cocktail.name}}</h3>
-    <ul class="mb-20" style="color:var(--secondary)"><em>
-        <li *ngFor="let ingr of cocktail.ingredients">
-            {{ingr.quantity}} {{ingr.unit}}
-            {{ingr.unit ?  'de' : null}}
-            {{ingr.name}}
-        </li>
-    </em></ul>
     <p class="mb-20">{{cocktail.description}}</p>
-    <div>
-        <button class="btn btn-primary">Editer le cocktail</button>
+    <ul class="mb-20 list-primary ingredients">
+        <li
+            class="d-flex flex-justify-content-between flex-align-items-center"
+            *ngFor="let ingr of cocktail.ingredients">
+            <span>
+                {{ingr.name}}
+            </span>
+            <span class="quantity">
+                {{ingr.quantity}}
+            </span>
+        </li>
+    </ul>
+    <div class="d-flex flex-row flex-justify-content-between">
+        <button routerLink="edit" class="btn btn-primary">Editer le cocktail</button>
+        <button (click)="addPanier()" class="btn btn-primary">Ajouter au panier</button>
     </div>
 </div>

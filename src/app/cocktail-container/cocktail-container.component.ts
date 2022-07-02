@@ -1,4 +1,4 @@
-import { CocktailService } from './../shared/cocktail.service'
+import { CocktailService } from '../shared/services/cocktail.service'
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core'
 import { Cocktail } from '../shared/interfaces/cocktail.interface'
 import { CocktailListComponent } from './cocktail-list/cocktail-list.component'
@@ -13,10 +13,7 @@ export class CocktailContainerComponent implements OnInit, OnDestroy {
     cocktails: Cocktail[] = []
     selectedCocktail!: Cocktail
     subscription: Subscription = new Subscription()
-
-    // @ViewChild('cocktailList') el!: CocktailListComponent
-
-
+    
     constructor(private cocktailService: CocktailService) { }
 
     ngOnInit(): void {
@@ -24,16 +21,6 @@ export class CocktailContainerComponent implements OnInit, OnDestroy {
             this.cocktailService.cocktails$.subscribe((cocktails: Cocktail[]) => {
                 this.cocktails = cocktails
             }))
-
-        this.subscription.add(
-            this.cocktailService.selectedCocktail$.subscribe((selectedCocktail: Cocktail) => {
-                this.selectedCocktail = selectedCocktail
-            })
-        )
-    }
-
-    chooseCocktail(index: number): void {
-        this.cocktailService.chooseCocktail(index)
     }
 
     ngOnDestroy(): void {

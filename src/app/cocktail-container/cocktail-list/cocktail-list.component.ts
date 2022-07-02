@@ -9,12 +9,7 @@ import { Cocktail } from 'src/app/shared/interfaces/cocktail.interface'
 })
 export class CocktailListComponent implements OnInit {
     @Input() cocktails!: Cocktail[]
-    @Output() cocktailEvent: EventEmitter<number> = new EventEmitter()
 
-    cocktailChoice!: Cocktail
-    showCocktail(index: number) {
-        this.cocktailEvent.emit(index)
-    }
 
     constructor() { }
 

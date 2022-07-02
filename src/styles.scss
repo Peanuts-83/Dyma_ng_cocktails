@@ -16,10 +16,6 @@ img {
 a {
     text-decoration: none;
     color: inherit;
-
-    &:hover {
-        // text-decoration: underline;
-    }
 }
 
 :root {
@@ -113,19 +109,25 @@ body {
 
 // theme
 
+.list-primary-action {
+    li {
+        &:hover {
+            background-color: var(--primary);
+            color: white;
+            cursor: pointer;
+        }
+
+        transition: background-color .4s;
+    }
+}
+
 .list-primary {
     li {
         padding: 10px 15px;
         border: 1px solid var(--lightgray);
         border-top: 0;
         font-weight: 500;
-
-        &:hover {
-            background-color: var(--primary);
-            color: white;
-            cursor: pointer;
-        }
-        transition: all .4s;
+        // border-radius: 3px;
     }
 
     li:first-child {
@@ -147,17 +149,35 @@ body {
     border: 0;
     border-radius: 3px;
     font-weight: 700;
+
     &-primary {
         background-color: var(--primary);
         color: white;
+
         &:hover {
             background-color: var(--secondary);
         }
+
         transition: background-color .4s;
     }
+
     cursor: pointer;
 }
 
+.ingredients {
+    color: var(--primary);
+    font-style: italic;
+
+    .quantity {
+        font-weight: bold;
+    }
+}
+
+
+.active {
+    background-color: var(--secondary);
+    color: white;
+}
 
 // debug
 .d1 {
