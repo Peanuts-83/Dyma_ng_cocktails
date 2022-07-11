@@ -1,1 +1,85 @@
-<p>cocktail-form works!</p>
+<div class="container">
+    <form (ngSubmit)="submit()" [formGroup]="form">
+        <div class="d-flex flex-column form-group">
+            <label>Nom</label>
+            <input class="form-group" formControlName="name" type="text" />
+            <div class="error" *ngIf="name?.errors">
+                {{ errorsForm["name"] }}
+            </div>
+        </div>
+        <div class="d-flex flex-column form-group">
+            <label>Image</label>
+            <input class="form-group" formControlName="img" type="text" />
+            <div class="error" *ngIf="img?.errors">
+                {{ errorsForm["img"] }}
+            </div>
+        </div>
+        <div formArrayName="ingredients" class="d-flex flex-column form-group">
+            <label>Ingredients</label>
+            <button
+                type="button"
+                class="btn btn-primary"
+                (click)="addIngredient()"
+            >
+                + Ajouter un ingrédient
+            </button>
+            <div
+                [formGroupName]="index"
+                class="d-flex flex-fill flex-justify-content-between form-group"
+                *ngFor="
+                    let ingredient of ingredients.controls;
+                    let index = index
+                "
+            >
+                <input
+                    class="d-flex flex-fill"
+                    type="text"
+                    formControlName="name"
+                />
+                <input
+                    class="d-flex ml-10"
+                    style="width: 15%"
+                    type="number"
+                    formControlName="quantity"
+                />
+
+                <span
+                    class="btn delete ml-10"
+                    (click)="deleteIngredient(index)"
+                >
+                    -
+                </span>
+            </div>
+            <div class="error" *ngIf="ingredients?.errors">
+                {{ errorsForm["ingredients"] }}
+            </div>
+        </div>
+        <div class="d-flex flex-column form-group">
+            <label>Description</label>
+            <input
+                class="form-group"
+                formControlName="description"
+                type="textarea"
+                aria-rowcount="3"
+            />
+            <div class="error" *ngIf="description?.errors">
+                {{ errorsForm["description"] }}
+            </div>
+        </div>
+        <button
+            [disabled]="form.invalid"
+            class="btn btn-primary"
+            style="margin-top: 20px"
+        >
+            Valider
+        </button>
+        <button
+            type="button"
+            routerLink="../"
+            class="btn btn-primary ml-10"
+            style="margin-top: 20px; background-color: var(--lightgray)"
+        >
+            Annuler
+        </button>
+    </form>
+</div>

@@ -10,7 +10,7 @@ ul {
 }
 
 img {
-    max-width: 100%;
+    max-height: 50vh;
 }
 
 a {
@@ -19,7 +19,7 @@ a {
 }
 
 :root {
-    --font-family: 'Open Sans', sans-serif;
+    --font-family: "Open Sans", sans-serif;
     --primary: #546de5;
     --secondary: #778beb;
     --accent: #e15f41;
@@ -107,6 +107,10 @@ body {
     margin-bottom: 20px;
 }
 
+.ml-10 {
+    margin-left: 10px;
+}
+
 // theme
 
 .list-primary-action {
@@ -117,7 +121,7 @@ body {
             cursor: pointer;
         }
 
-        transition: background-color .4s;
+        transition: background-color 0.4s;
     }
 }
 
@@ -147,6 +151,7 @@ body {
     padding: 10px 15px;
     background-color: white;
     border: 0;
+    cursor: pointer;
     border-radius: 3px;
     font-weight: 700;
 
@@ -157,11 +162,17 @@ body {
         &:hover {
             background-color: var(--secondary);
         }
+        &:active {
+            background-color: var(--accent);
+        }
 
-        transition: background-color .4s;
+        transition: background-color 0.4s;
     }
 
-    cursor: pointer;
+    &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
 }
 
 .ingredients {
@@ -173,10 +184,27 @@ body {
     }
 }
 
-
 .active {
     background-color: var(--secondary);
     color: white;
+}
+
+.form-group {
+    // margin: 5px 0;
+    padding: 10px 0;
+}
+
+.error {
+    font-size: 0.7em;
+    color: red;
+}
+
+.delete {
+    cursor: pointer;
+    padding: 10px;
+    background-color: red;
+    color: white;
+    font-weight: bold;
 }
 
 // debug

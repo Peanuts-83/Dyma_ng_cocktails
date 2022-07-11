@@ -2,6 +2,7 @@
 import { NgModule, Component } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
 import { RouterModule, Routes } from '@angular/router'
+import { ReactiveFormsModule } from '@angular/forms'
 // Routes
 import { APP_ROUTES } from './app.routes'
 // Composants
@@ -31,6 +32,7 @@ import { CocktailFormComponent } from './cocktail-container/cocktail-form/cockta
     ],
     imports: [
         BrowserModule,
+        ReactiveFormsModule,
         RouterModule.forRoot(APP_ROUTES)
     ],
     providers: [],

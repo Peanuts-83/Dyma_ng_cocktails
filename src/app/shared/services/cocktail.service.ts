@@ -47,4 +47,11 @@ export class CocktailService {
         return cocktails[index]
     }
 
+    addCocktail(cocktail: Cocktail): void {
+        const cocktails = this.cocktails$.value
+        this.cocktails$.next([...cocktails, cocktail])
+        console.log('Cocktail added successfully!');
+
+    }
+
 }

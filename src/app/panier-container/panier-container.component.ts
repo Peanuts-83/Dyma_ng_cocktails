@@ -21,6 +21,7 @@ export class PanierContainerComponent implements OnInit, OnDestroy {
             })
     }
 
+
     ngOnDestroy(): void {
         this.subscription.unsubscribe()
     }
