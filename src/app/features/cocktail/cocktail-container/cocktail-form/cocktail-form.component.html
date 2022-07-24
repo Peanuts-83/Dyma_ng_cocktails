@@ -16,6 +16,7 @@
         </div>
         <div formArrayName="ingredients" class="d-flex flex-column form-group">
             <label>Ingredients</label>
+            <!--type="button" - won't send form-->
             <button
                 type="button"
                 class="btn btn-primary"
@@ -66,6 +67,7 @@
                 {{ errorsForm["description"] }}
             </div>
         </div>
+        <!-- active btn to send form - no type="button"-->
         <button
             [disabled]="form.invalid"
             class="btn btn-primary"
@@ -73,6 +75,7 @@
         >
             Valider
         </button>
+        <!--type="button" - won't send form-->
         <button
             type="button"
             routerLink="../"

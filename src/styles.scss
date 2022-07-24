@@ -111,6 +111,10 @@ body {
     margin-left: 10px;
 }
 
+.w-100 {
+    width: 100%;
+}
+
 // theme
 
 .list-primary-action {
@@ -189,11 +193,6 @@ body {
     color: white;
 }
 
-.form-group {
-    // margin: 5px 0;
-    padding: 10px 0;
-}
-
 .error {
     font-size: 0.7em;
     color: red;
@@ -205,6 +204,28 @@ body {
     background-color: red;
     color: white;
     font-weight: bold;
+}
+
+//form
+
+.form-group {
+    padding: 10px 15px;
+}
+
+label {
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+input {
+    border: 1px solid black;
+    border-radius: 3px;
+    &.ng-dirty {
+        border: 1px solid black;
+    }
+    &.ng-dirty.ng-invalid {
+        border: 3px solid red;
+    }
 }
 
 // debug

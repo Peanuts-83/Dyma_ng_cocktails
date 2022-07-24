@@ -8,8 +8,8 @@ import {
     ValidatorFn,
     Validators,
 } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { first, Subscription } from 'rxjs';
 import { Cocktail } from 'src/app/shared/interfaces/cocktail.interface';
 import { CocktailService } from 'src/app/shared/services/cocktail.service';
 
@@ -21,6 +21,54 @@ import { CocktailService } from 'src/app/shared/services/cocktail.service';
 export class CocktailFormComponent implements OnInit, OnDestroy {
     public cocktails: Cocktail[] = [];
     public cocktailSubscription!: Subscription;
+    public cocktail!: Cocktail;
+    public cocktailIndex!: string | null;
+
+    // FORM
+    public form: FormGroup = new FormGroup({
+        name: new FormControl('', [Validators.required, this.validName()]),
+        img: new FormControl('', Validators.required),
+        ingredients: new FormArray([], Validators.minLength(1)),
+        description: new FormControl('', Validators.required),
+    });
+
+    // FORM init
+    private initForm(
+        cocktail: Cocktail = {
+            name: '',
+            description: '',
+            ingredients: [],
+            img: '',
+        }
+    ): FormGroup {
+        return new FormGroup({
+            name: new FormControl(cocktail.name, [
+                Validators.required,
+                this.validName,
+            ]),
+            img: new FormControl(cocktail.img, Validators.required),
+            ingredients: new FormArray(
+                cocktail.ingredients.map(
+                    (ingredient) =>
+                        new FormGroup({
+                            name: new FormControl(
+                                ingredient.name,
+                                Validators.required
+                            ),
+                            quantity: new FormControl(
+                                ingredient.quantity,
+                                Validators.required
+                            ),
+                        })
+                ),
+                Validators.minLength(1)
+            ),
+            description: new FormControl(
+                cocktail.description,
+                Validators.required
+            ),
+        });
+    }
 
     // Name validator
     validName(): ValidatorFn {
@@ -95,25 +143,17 @@ export class CocktailFormComponent implements OnInit, OnDestroy {
         }
     }
 
-    // FORM
-    public form: FormGroup = new FormGroup({
-        name: new FormControl('', [Validators.required, this.validName()]),
-        img: new FormControl('', Validators.required),
-        ingredients: new FormArray([], Validators.minLength(1)),
-        description: new FormControl('', Validators.required),
-    });
-
     // FORM GETTERS
-    get name() {
+    public get name() {
         return this.form.get('name');
     }
-    get img() {
+    public get img() {
         return this.form.get('img');
     }
-    get ingredients() {
+    public get ingredients() {
         return this.form.get('ingredients') as FormArray;
     }
-    get description() {
+    public get description() {
         return this.form.get('description');
     }
 
@@ -127,9 +167,18 @@ export class CocktailFormComponent implements OnInit, OnDestroy {
         if (this.form.valid === false) {
             return;
         }
-        this.cocktailService.addCocktail(this.form.value);
-        console.log('FORM VALUES ', this.form.value);
-        this.router.navigate(['../'], {relativeTo: this.activatedRoute})
+        console.log('cocktailIndex', this.cocktailIndex);
+
+        if (this.cocktail) {
+            this.cocktailService.editCocktail(
+                this.cocktail._id,
+                this.form.value
+            ).subscribe();
+        } else {
+            this.cocktailService.addCocktail(this.form.value).subscribe();
+        }
+        console.log('SUBMIT Form ', this.form.value);
+        this.router.navigate(['../'], { relativeTo: this.activatedRoute });
     }
 
     // ERASE form
@@ -139,7 +188,7 @@ export class CocktailFormComponent implements OnInit, OnDestroy {
 
     // ADD/DELETE ingredient
     addIngredient(): void {
-        this.ingredients?.push(
+        this.ingredients.push(
             new FormGroup({
                 name: new FormControl('', [
                     Validators.required,
@@ -165,7 +214,19 @@ export class CocktailFormComponent implements OnInit, OnDestroy {
         this.cocktailSubscription = this.cocktailService.cocktails$.subscribe(
             (cocktails: Cocktail[]) => (this.cocktails = cocktails)
         );
-        console.log('COCKTAILS -', this.cocktails);
+        //console.log('COCKTAILS -', this.cocktails);
+        this.activatedRoute.paramMap.subscribe((paramMap: ParamMap) => {
+            this.cocktailIndex = paramMap.get('index');
+            if (this.cocktailIndex !== null) {
+                this.cocktailService
+                    .getCocktail(+this.cocktailIndex)
+                    .pipe(first())
+                    .subscribe((cocktail: Cocktail) => {
+                        this.cocktail = cocktail;
+                    });
+            }
+            this.form = this.initForm(this.cocktail);
+        });
     }
 
     ngOnDestroy(): void {

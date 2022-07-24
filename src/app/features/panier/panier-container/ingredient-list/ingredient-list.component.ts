@@ -1,4 +1,4 @@
-import { Ingredient } from './../shared/interfaces/ingredient.interface'
+import { Ingredient } from '../../../../shared/interfaces/ingredient.interface'
 import { Component, Input, OnInit } from '@angular/core'
 
 @Component({
@@ -8,7 +8,7 @@ import { Component, Input, OnInit } from '@angular/core'
 })
 export class IngredientListComponent implements OnInit {
     @Input() ingredients: Ingredient[] | null = null
-    
+
     constructor() { }
 
     ngOnInit(): void {

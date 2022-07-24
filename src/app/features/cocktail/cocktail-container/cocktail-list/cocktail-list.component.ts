@@ -1,6 +1,7 @@
 
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 import { Cocktail } from 'src/app/shared/interfaces/cocktail.interface'
+import { FilterPipe } from 'src/app/shared/pipes/filter.pipe'
 
 @Component({
     selector: 'app-cocktail-list',
@@ -8,8 +9,8 @@ import { Cocktail } from 'src/app/shared/interfaces/cocktail.interface'
     styleUrls: ['./cocktail-list.component.scss']
 })
 export class CocktailListComponent implements OnInit {
-    @Input() cocktails!: Cocktail[]
-
+    @Input() public cocktails: Cocktail[] | null = null
+    public search = ''
 
     constructor() { }
 

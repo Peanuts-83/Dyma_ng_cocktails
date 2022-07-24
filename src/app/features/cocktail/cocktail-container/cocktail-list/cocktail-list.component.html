@@ -1,0 +1,12 @@
+<h2 class="mb-20">Liste des cocktails</h2>
+<input type="text" [(ngModel)]="search"  placeholder="Recherchez un cocktail" class="form-group mb-20 w-100">
+<ul *ngIf="cocktails" class="mb-20 list-primary list-primary-action">
+    <li
+        *ngFor="let cocktail of cocktails | filter: search; let index = index"
+        [routerLink]="[index]"
+        routerLinkActive="active"
+        >
+        {{cocktail.name}}
+    </li>
+</ul>
+<button routerLink="new" class="btn btn-primary">Ajouter un cocktail</button>
